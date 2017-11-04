@@ -4,7 +4,8 @@ Aircraft::Aircraft() {
 
 }
 
-Aircraft::Aircraft(std::string flightNumber, std::string airline, std::string aircraftType, int groundspeed, int altitude, std::string gridReference, int heading) {
+Aircraft::Aircraft(std::string flightNumber, std::string airline, std::string aircraftType, int groundspeed, int altitude, std::string gridReference, int heading) 
+: flightNumber_{ flightNumber }, airline_{ airline }, aircraftType_{ aircraftType }, groundSpeed_{ groundspeed }, altitude_{ altitude }, gridReference_{ gridReference }, heading_{heading} {
 	
 }
 
