@@ -33,14 +33,14 @@ std::vector<Aircraft> FlightSystem::ListAllAircraft() {
 
 std::vector<Aircraft> FlightSystem::ListAllCrusingAircraft()
 {
-	std::vector<Aircraft> CrusingAircrafts;
+	std::vector<Aircraft> CrusingAircraft;
 
 	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
 		if (aircraftList_[i].GetAltitude() >= 30000) {
-			CrusingAircrafts.push_back(aircraftList_[i]);
+			CrusingAircraft.push_back(aircraftList_[i]);
 		}
 	}
-	return CrusingAircrafts;
+	return CrusingAircraft;
 }
 
 void FlightSystem::RemoveAircraft(std::string flightNumber) {
@@ -63,7 +63,7 @@ void FlightSystem::ChangeHeading(std::string flightNumber, int heading) {
 	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
 		if (aircraftList_[i].GetFlightNumber() == flightNumber) {
 			AircraftCheck = { 1 };
-			std::cout << "This flight exists! Its heading will now change!" << std::endl;
+			std::cout << "Heading of flight " << flightNumber << " changed to " << heading << std::endl;
 			return aircraftList_[i].SetHeading(heading);
 			}
 		else if (AircraftCheck = { 0 }) {
