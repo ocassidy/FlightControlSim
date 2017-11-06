@@ -7,6 +7,7 @@ private:
 
 public:
 
+	//Constructor
 	FlightSystem::FlightSystem();
 
 	//Member functions

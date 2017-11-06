@@ -1,4 +1,3 @@
-#include "Aircraft.h"
 #include "FlightSystem.h"
 
 //Main : Will be used for UI navigation
@@ -12,12 +11,12 @@ int main()
 
 	//Declaration of flight number
 	std::string flightNumber;
-	std::regex rFlightNumber{ R"(\w{2}?[a-z]\d{3}[a-z]?)" };
+	std::regex rFlightNumber{ R"(\w?\w?\w?\w?[a-zA-Z](\s)?\d?\d?\d?\d?[0-9]{2,8})" };
 	bool flightMatch{ 0 };
 
 	//Declaration of for airline
 	std::string airline;
-	std::regex rAirline{ R"(\w?(\s)?[A-Z]{4,20})" };
+	std::regex rAirline{ R"(\D\w?\s?[A-Z]{4,20})" };
 	bool airlineMatch{ 0 };
 
 	//Declaration of aircraft type
@@ -33,7 +32,7 @@ int main()
 
 	//Declaration of grid reference
 	std::string gridReference;
-	std::regex rGridReference{ R"([a-z]?[1-9])" };
+	std::regex rGridReference{ R"(\D\w?[A-J]?\d?[0-9]{1,3})" };
 	bool gridReferenceMatch{ 0 };
 
 	//Declaration of heading
