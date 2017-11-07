@@ -14,15 +14,17 @@ void FlightSystem::AddAircraft(std::string flightNumber, std::string airline, st
 			std::cout << "Flight " << flightNumber << "already exists in the system" << std::endl;
 			AircraftCheck ==  0 ;
 		}
-		if (AircraftCheck ==  1 ) {
+		if (AircraftCheck ==  1) {
 			aircraftList_.push_back(Aircraft(flightNumber, airline, aircraftType, groundspeed, altitude, gridReference, heading));
-				if ((aircraftList_[i].GetGridReference()) == (aircraftList_[i+1].GetGridReference())) {
+			for (unsigned int j = 1; j < aircraftList_.size(); j++) {
+				if ((aircraftList_[i].GetGridReference()) == (aircraftList_[j].GetGridReference())) {
 					if (aircraftList_[i].GetAltitude() == altitude) {
-						if ((aircraftList_[i].GetAltitude() - altitude <= CollisionDistance) == (aircraftList_[i + 1].GetAltitude() - altitude >= CollisionDistance)) {
-							std::cout << "Warning – Aircraft collision possible between " << aircraftList_[i].GetFlightNumber() << " and " << aircraftList_[i+1].GetFlightNumber() << std::endl;
+						if ((aircraftList_[i].GetAltitude() - altitude <= CollisionDistance) == (aircraftList_[j].GetAltitude() - altitude >= CollisionDistance)) {
+							std::cout << "Warning – Aircraft collision possible between " << aircraftList_[i].GetFlightNumber() << " and " << aircraftList_[j].GetFlightNumber() << std::endl;
 						}
 					}
 				}
+			}
 		}
 	}
 }
@@ -49,7 +51,7 @@ void FlightSystem::RemoveAircraft(std::string flightNumber) {
 	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
 		if (aircraftList_[i].GetFlightNumber() == flightNumber) {
 			std::cout << "Flight " << flightNumber << "is not in the system”" << std::endl;
-			AircraftCheck = { 0 };
+			AircraftCheck = 0 ;
 		}
 		else if (AircraftCheck ==  1 ) {
 			aircraftList_.erase(aircraftList_.begin()+i, aircraftList_.end()-i);
@@ -62,7 +64,7 @@ void FlightSystem::ChangeHeading(std::string flightNumber, int heading) {
 
 	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
 		if (aircraftList_[i].GetFlightNumber() == flightNumber) {
-			AircraftCheck = { 1 };
+			AircraftCheck = 1 ;
 			std::cout << "Heading of flight " << flightNumber << " changed to " << heading << std::endl;
 			return aircraftList_[i].SetHeading(heading);
 			}
@@ -80,7 +82,7 @@ int FlightSystem::GetHeading(std::string flightNumber) const {
 			AircraftCheck = { 1 };
 			std::cout << "The heading is : " << aircraftList_[i].GetHeading() << std::endl;
 		}
-		else if (AircraftCheck ==  0 ) {
+		else if (AircraftCheck =  0 ) {
 			std::cout << "Flight " << flightNumber << " is not in the system" << std::endl;
 		}
 	}
@@ -95,16 +97,18 @@ void FlightSystem::ChangeAltitude(std::string flightNumber, int altitude) {
 		if (aircraftList_[i].GetFlightNumber() == flightNumber) {
 			AircraftCheck = { 1 };
 			std::cout << "Alititude of flight " << flightNumber << " changed to " << altitude << std::endl;
-			if ((aircraftList_[i].GetGridReference()) == (aircraftList_[i+1].GetGridReference())) {
-				if (aircraftList_[i].GetAltitude() == altitude) {
-					if ((aircraftList_[i].GetAltitude() - altitude <= CollisionDistance) == (aircraftList_[i + 1].GetAltitude() - altitude >= CollisionDistance)) {
-						std::cout << "Warning – Aircraft collision possible between " << aircraftList_[i].GetFlightNumber() << " and " << aircraftList_[i + 1].GetFlightNumber() << std::endl;
+			for (unsigned int j = 1; j < aircraftList_.size(); j++){
+				if ((aircraftList_[i].GetGridReference()) == (aircraftList_[j].GetGridReference())) {
+					if (aircraftList_[i].GetAltitude() == altitude) {
+						if ((aircraftList_[i].GetAltitude() - altitude <= CollisionDistance) == (aircraftList_[j].GetAltitude() - altitude >= CollisionDistance)) {
+							std::cout << "Warning – Aircraft collision possible between " << aircraftList_[i].GetFlightNumber() << " and " << aircraftList_[j].GetFlightNumber() << std::endl;
+						}
 					}
 				}
 			}
 			return aircraftList_[i].SetAltitude(altitude);
 		}
-		else if (AircraftCheck ==  0  ) {
+		else if (AircraftCheck =  0  ) {
 			std::cout << "Flight " << flightNumber << " is not in the system" << std::endl;
 		}
 	}
@@ -115,10 +119,10 @@ int FlightSystem::GetAltitude(std::string flightNumber) const {
 
 	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
 		if (aircraftList_[i].GetFlightNumber() == flightNumber) {
-			AircraftCheck = { 1 };
+			AircraftCheck =  1 ;
 			std::cout << "The altitude is : " << aircraftList_[i].GetAltitude() << std::endl;
 		}
-		else if (AircraftCheck = { 0 }) {
+		else if (AircraftCheck =  0 ) {
 			std::cout << "Flight " << flightNumber << " is not in the system" << std::endl;
 		}
 	}

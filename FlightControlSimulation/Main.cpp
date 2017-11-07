@@ -11,18 +11,18 @@ int main()
 
 	//Declaration of flight number
 	std::string flightNumber;
-	std::regex rFlightNumber{ R"(\w?\w?\w?\w?[a-zA-Z](\s)?\d?\d?\d?\d?[0-9]{2,8})" };
-	bool flightMatch{ 0 };
+	std::regex rFlightNumber{ R"(\w?\w?\w?\w?[a-zA-Z]{1,4}(\s)?\d?\d?\d?\d?[0-9]{1,4}$)" };
+	bool flightMatch =  0 ;
 
 	//Declaration of for airline
 	std::string airline;
-	std::regex rAirline{ R"(\D\w?\s?[A-Z]{4,20})" };
-	bool airlineMatch{ 0 };
+	std::regex rAirline{ R"(\D\w?(\s?)[a-zA-Z]{4,20})" };
+	bool airlineMatch = 0;
 
 	//Declaration of aircraft type
 	std::string aircraftType;
-	std::regex rAircraftype{ R"(\w?(\s)?[A-Z]{3,10})" };
-	bool aircraftMatch{ 0 };
+	std::regex rAircraftype{ R"(\w?(\s)?[A-Z]{3,10}\d{1,4})" };
+	bool aircraftMatch = 0;
 
 	//Declaration of groundspeed
 	int groundspeed;
@@ -32,8 +32,8 @@ int main()
 
 	//Declaration of grid reference
 	std::string gridReference;
-	std::regex rGridReference{ R"(\D\w?[A-J]?\d?[0-9]{1,3})" };
-	bool gridReferenceMatch{ 0 };
+	std::regex rGridReference{ R"(\D\w[A-J]?\d{1,1})" };
+	bool gridReferenceMatch = 0;
 
 	//Declaration of heading
 	int heading;
@@ -60,72 +60,85 @@ int main()
 		//AddAircraft variables entered and passed to flightSystem.AddAircraft(flightNumber, airline, aircraftType, groundspeed, altitude, gridReference, heading);
 	case 1:
 		//Verifications for each entered variable
-		std::cout << "Enter Flight Number: " << std::endl;
-		std::cin >> flightNumber;
-		while (!flightMatch) {
+		while (flightMatch != 1) {
+			std::cout << "Enter Flight Number: " << std::endl;
+			std::getline(std::cin, flightNumber);
 			if (regex_match(flightNumber, rFlightNumber)) {
 				std::cout << "Flight number accepted! The Flight Number is : " << flightNumber << std::endl;
-				flightMatch = { 1 };
+				flightMatch = 1;
 			}
-
-			std::cout << "Enter Airline: " << std::endl;
-			while (!aircraftMatch) {
-				std::cin >> airline;
-				if (regex_match(airline, rAirline)) {
-					std::cout << "The Airline is is : " << airline << std::endl;
-					aircraftMatch = { 1 };
-				}
+			else {
+				std::cout << "Flight number invalid please enter again" <<  std::endl;
+				std::getline(std::cin, flightNumber);
 			}
-
-			std::cout << "Enter Aircraft Type: " << std::endl;
-			while (!aircraftMatch) {
-				std::cin >> aircraftType;
-				if (regex_match(aircraftType, rAircraftype)) {
-					std::cout << "The Aircraft Type is : " << aircraftType << std::endl;
-					aircraftMatch = { 1 };
-				}
-			}
-
-			std::cout << "Enter Groundspeed: " << std::endl;
-			std::cin >> (groundspeed);
-			while (groundspeed <= 0 || groundspeed > 800) {
-				std::cout << "The Groundspeed is invalid! Must be between 0-800mph: " << groundspeed << std::endl;
-				std::cout << "Please re-enter Groundspeed: " << std::endl;
-				std::cin >> (groundspeed);
-			}
-
-			std::cout << "Enter Altitude: " << std::endl;
-			std::cin >> (altitude);
-			while (altitude < 0 || altitude > 60000) {
-				std::cout << "This Altitude is invalid! Must be between 0-60000ft: " << altitude << std::endl;
-				std::cout << "Please re-enter altitude: " << std::endl;
-				std::cin >> (altitude);
-			}
-
-			std::cout << "Enter Grid Reference: " << std::endl;
-			while (!gridReferenceMatch) {
-				std::cin >> gridReference;
-				if (regex_match(gridReference, rGridReference)) {
-					std::cout << "This Grid Reference is valid!" << std::endl;
-					gridReference = { 1 };
-				}
-				else {
-					std::cout << "This Grid Reference is invalid! Please Re-enter" << std::endl;
-					std::cin >> gridReference;
-				}
-			}
-
-			std::cout << "Enter Heading: " << std::endl;
-			std::cin >> (heading);
-			while (heading < 0 || heading > 360) {
-				std::cout << "The Heading is is invalid! Must be between 0-360°: " << heading << std::endl;
-				std::cout << "Please re-enter heading: " << std::endl;
-				std::cin >> (heading);
-			}
-
-			flightSystem.AddAircraft(flightNumber, airline, aircraftType, groundspeed, altitude, gridReference, heading);
-			break;
 		}
+		
+		while (aircraftMatch != 1) {
+			std::cout << "Enter Airline: " << std::endl;
+			std::getline(std::cin, airline);
+			if (regex_match(airline, rAirline)) {
+				std::cout << "The Airline is is : " << airline << std::endl;
+				aircraftMatch = 1;
+			}
+			else {
+				std::cout << "Airline is invalid please enter again" << std::endl;
+				std::getline(std::cin, airline);
+			}	
+		}
+
+		while (aircraftMatch != 1) {
+			std::cout << "Enter Aircraft Type: " << std::endl;
+			std::cin >> aircraftType;
+			if (regex_match(aircraftType, rAircraftype)) {
+				std::cout << "The Aircraft Type is : " << aircraftType << std::endl;
+				aircraftMatch = 1;
+			}
+			else {
+				std::cout << "Enter Aircraft Type: " << std::endl;
+				std::cin >> aircraftType;
+			}
+		
+		}
+
+		std::cout << "Enter Groundspeed: " << std::endl;
+		std::cin >> (groundspeed);
+		while (groundspeed <= 0 || groundspeed > 800) {
+			std::cout << "The Groundspeed is invalid! Must be between 0-800mph: " << groundspeed << std::endl;
+			std::cout << "Please re-enter Groundspeed: " << std::endl;
+			std::cin >> (groundspeed);
+		}
+
+		std::cout << "Enter Altitude: " << std::endl;
+		std::cin >> (altitude);
+		while (altitude < 0 || altitude > 60000) {
+			std::cout << "This Altitude is invalid! Must be between 0-60000ft: " << altitude << std::endl;
+			std::cout << "Please re-enter altitude: " << std::endl;
+			std::cin >> (altitude);
+		}
+
+		
+		while (gridReferenceMatch != 1) {
+			std::cout << "Enter Grid Reference: " << std::endl;
+			std::getline(std::cin, gridReference);
+			if (regex_match(gridReference, rGridReference)) {
+				std::cout << "This Grid Reference is valid!" << std::endl;
+				gridReferenceMatch = 1;
+			}
+			else {
+				std::cout << "This Grid Reference is invalid! Please Re-enter" << std::endl;
+				std::getline(std::cin, gridReference);
+			}
+		}
+
+		std::cout << "Enter Heading: " << std::endl;
+		std::cin >> (heading);
+		while (heading < 0 || heading > 360) {
+			std::cout << "The Heading is is invalid! Must be between 0-360°: " << heading << std::endl;
+			std::cout << "Please re-enter heading: " << std::endl;
+			std::cin >> (heading);
+		}
+		flightSystem.AddAircraft(flightNumber, airline, aircraftType, groundspeed, altitude, gridReference, heading);
+		break;
 
 	case 2:
 		//Returns and lists all aircraft in the system
@@ -141,7 +154,7 @@ int main()
 
 	case 4:
 		//Removes flights from the system
-		std::getline(std::cin, flightNumber);
+		std::cin>> flightNumber;
 		std::cout << "This flight will now be deleted!" << std::endl;
 		flightSystem.RemoveAircraft(flightNumber);
 
@@ -149,7 +162,7 @@ int main()
 	case 5:
 		//Changes heading of an aircraft
 		std::cout << "Enter flight number to change heading: " << std::endl;
-		std::getline(std::cin, flightNumber);
+		std::cin>> flightNumber;
 		std::cout << "Enter the heading you wish to change it to : " << std::endl;
 		std::cin >> heading;
 
@@ -187,7 +200,7 @@ int main()
 	default:
 		std::cout << "Invalid input!" << std::endl;
 		std::cout << "Please re-try!" << std::endl;
-		std::cin.operator>> (Navigate);
+		std::cin >> (Navigate);
 	}
 	return 0;
 }
