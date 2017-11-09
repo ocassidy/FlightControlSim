@@ -10,7 +10,7 @@ Aircraft::Aircraft(std::string flightNumber, std::string airline, std::string ai
 }
 
 void Aircraft::SetFlightNumber(std::string flightNumber) {
-	flightNumber = flightNumber_;
+	flightNumber_ = flightNumber;
 }
 
 std::string Aircraft::GetFlightNumber() const {
@@ -18,7 +18,7 @@ std::string Aircraft::GetFlightNumber() const {
 }
 
 void Aircraft::SetAirline(std::string airline) {
-	airline = airline_;
+	airline_ = airline;
 }
 
 std::string Aircraft::GetAirline() const {
@@ -26,15 +26,15 @@ std::string Aircraft::GetAirline() const {
 }
 
 void Aircraft::SetAircraftType(std::string aircraftType) {
-	aircraftType = aircraftType_;
+	aircraftType_ = aircraftType;
 }
 
 std::string Aircraft::GetAircraftType() const {
-	return aircraftType_;;
+	return aircraftType_;
 }
 
 void Aircraft::SetGroundSpeed(int groundSpeed) {
-	groundSpeed = groundSpeed_;
+	groundSpeed_ = groundSpeed;
 }
 
 int Aircraft::GetGroundSpeed() const {
@@ -50,7 +50,7 @@ int Aircraft::GetAltitude() const {
 }
 
 void Aircraft::SetGridReference(std::string gridReference) {
-	gridReference = gridReference_;
+	gridReference_ = gridReference;
 }
 
 std::string Aircraft::GetGridReference() const {
@@ -58,7 +58,7 @@ std::string Aircraft::GetGridReference() const {
 }
 
 void Aircraft::SetHeading(int heading) {
-	heading = heading_;
+	heading_ = heading;
 }
 
 int Aircraft::GetHeading() const {

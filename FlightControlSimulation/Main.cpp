@@ -6,13 +6,18 @@ int main()
 	//FlightSystem Object instantiated
 	FlightSystem flightSystem;
 
-	flightSystem.AddAircraft("KYGH43", "British Airlines", "Boeing747", 345, 34675, "A3", 247);
-	flightSystem.AddAircraft("NDFG33", "Irish Air", "Boeing747", 434, 33000, "A3", 354);
-	flightSystem.AddAircraft("QKE322", "German Lufthansa", "Boeing747", 763, 37622, "A5", 134);
-	flightSystem.AddAircraft("MLAU792", "Sweedish Plones", "Boeing747", 236, 12346, "A8", 168);
+	flightSystem.AddAircraft("IE23", "Aer Lingus", "A380", 232, 15000, "A1", 180);
+	flightSystem.AddAircraft("ABP22", "Astro Airlines", "A380", 451, 30000, "A4", 90);
+	flightSystem.AddAircraft("VS19", "Virgin Atlantic", "A340", 500, 34000, "A1", 270);
+	flightSystem.AddAircraft("VS20", "Virgin Atlantic", "A340", 500, 38000, "A1", 180);
 
-	flightSystem.ChangeAltitude("KYGH43", 100);
-	flightSystem.ChangeAltitude("NDFG33", 200);
+	//flightSystem.RemoveAircraft("IE23");
+	flightSystem.RemoveAircraft("IE999");
+	flightSystem.ChangeHeading("VS19", 90);
+	flightSystem.ChangeHeading("EA529", 230);
+	flightSystem.ChangeAltitude("VS19", 32000);
+	flightSystem.ChangeAltitude("BA501", 32000);
+	flightSystem.ChangeAltitude("VS20", 32000);
 
 	//Declaration of Navigate
 	int Navigate;
@@ -46,8 +51,6 @@ int main()
 	//Declaration of heading
 	int heading;
 	bool headingMatch = 0;
-
-
 
 	//Menu print
 	std::cout << "[1] will be used for adding aircraft." << std::endl;
@@ -169,7 +172,7 @@ int main()
 
 		case 2:
 			//Returns and lists all aircraft in the system
-			std::cout << "All the aircraft will be listed below." << std::endl;
+			std::cout << "All the aircraft will be listed below." << std::endl;	
 			flightSystem.ListAllAircraft();
 			break;
 
