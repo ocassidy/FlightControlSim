@@ -5,28 +5,28 @@ FlightSystem::FlightSystem() {
 }
 
 //Member functions
-void FlightSystem::AddAircraft(std::string flightNumber, std::string airline, std::string aircraftType, int groundspeed, int altitude, std::string gridReference, int heading) {
+void FlightSystem::AddAircraft(std::string flightNumber, std::string airline, std::string aircraftType, int groundspeed, int altitude, std::string gridReference, int heading)
+{
+	int VectorSize = aircraftList_.size();
 	bool AircraftCheck = 0;
 	int CollisionDistance = 3000;
 
-	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
-		if (aircraftList_[i].GetFlightNumber() == flightNumber) {
-			std::cout << "Flight " << flightNumber << "already exists in the system" << std::endl;
-			AircraftCheck == 0;
+	for (unsigned int i = 0; i < VectorSize; i++){
+		if (aircraftList_[i].GetFlightNumber() == flightNumber){
+			AircraftCheck = 1;
+			std::cout << "Flight " << flightNumber << " already exists in the system" << std::endl;
 		}
-		if (AircraftCheck == 1) {
-			aircraftList_.push_back(Aircraft(flightNumber, airline, aircraftType, groundspeed, altitude, gridReference, heading));
-			CheckForCollision(flightNumber, altitude, gridReference);
+	}
 
-			/*for (unsigned int j = 1; j < aircraftList_.size(); j++) {
-				if ((aircraftList_[i].GetGridReference()) == (aircraftList_[j].GetGridReference())) {
-					if (aircraftList_[i].GetAltitude() == altitude) {
-						if ((aircraftList_[i].GetAltitude() >= CollisionDistance) == (aircraftList_[j].GetAltitude()  <= CollisionDistance)) {
-							std::cout << "Warning – Aircraft collision possible between " << aircraftList_[i].GetFlightNumber() << " and " << aircraftList_[j].GetFlightNumber() << std::endl;
-						}
-					}
+	if (AircraftCheck == 0) {
+		aircraftList_.push_back(Aircraft(flightNumber, airline, aircraftType, groundspeed, altitude, gridReference, heading));
+
+		for (unsigned int i = 0; i < aircraftList_.size() - 1; i++) {
+			if (aircraftList_[i].GetGridReference() == gridReference) {
+				if (std::abs(aircraftList_[i].GetAltitude() - altitude) <= CollisionDistance) {
+					std::cout << "Warning - Aircraft collision possible between " << flightNumber << " and " << aircraftList_[i].GetFlightNumber() << std::endl;
 				}
-			}*/
+			}
 		}
 	}
 }
@@ -52,11 +52,11 @@ void FlightSystem::RemoveAircraft(std::string flightNumber) {
 
 	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
 		if (aircraftList_[i].GetFlightNumber() == flightNumber) {
-			std::cout << "Flight " << flightNumber << "is not in the system”" << std::endl;
+			std::cout << "Flight " << flightNumber << " is not in the system" << std::endl;
 			AircraftCheck = 0;
 		}
 		else if (AircraftCheck == 1) {
-			aircraftList_.erase(aircraftList_.begin() + i, aircraftList_.end() - i);
+			aircraftList_.erase(aircraftList_.begin() + i);
 		}
 	}
 }
@@ -91,29 +91,30 @@ int FlightSystem::GetHeading(std::string flightNumber) const {
 	return 0;
 }
 
-void FlightSystem::ChangeAltitude(std::string flightNumber, int altitude) {
-	bool AircraftCheck = 0;
+void FlightSystem::ChangeAltitude(std::string flightNumber, int altitude){
+	int AircraftCheck = -1;
 	int CollisionDistance = 3000;
 
-	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
-		if (aircraftList_[i].GetFlightNumber() == flightNumber) {
-			AircraftCheck = { 1 };
+	for (unsigned int i = 0; i < aircraftList_.size(); i++){
+		if (aircraftList_[i].GetFlightNumber() == flightNumber){
+			AircraftCheck = i;
 			std::cout << "Alititude of flight " << flightNumber << " changed to " << altitude << std::endl;
-			CheckForCollision(flightNumber, altitude, gridReference);
+			aircraftList_[i].SetAltitude(altitude);
+		}
+	}
 
-			/*for (unsigned int j = 1; j < aircraftList_.size(); j++){
-				if ((aircraftList_[i].GetGridReference()) == (aircraftList_[j].GetGridReference())) {
-					if (aircraftList_[i].GetAltitude() == altitude) {
-						if ((aircraftList_[i].GetAltitude() >= CollisionDistance) == (aircraftList_[j].GetAltitude() <= CollisionDistance)) {
-							std::cout << "Warning – Aircraft collision possible between " << aircraftList_[i].GetFlightNumber() << " and " << aircraftList_[j].GetFlightNumber() << std::endl;
-						}
+	if (AircraftCheck == -1){
+		std::cout << "Flight " << flightNumber << " is not in the system" << std::endl;
+	}
+	else{
+		for (unsigned int i = 0; i < aircraftList_.size(); i++){
+			if (i != AircraftCheck){
+				if (aircraftList_[i].GetGridReference() == aircraftList_[AircraftCheck].GetGridReference()){
+					if ((aircraftList_[i].GetAltitude() - altitude) <= CollisionDistance){
+						std::cout << "Warning - Aircraft collision possible between " << aircraftList_[AircraftCheck].GetFlightNumber() << " and " << aircraftList_[i].GetFlightNumber() << std::endl;
 					}
 				}
-			}*/
-			return aircraftList_[i].SetAltitude(altitude);
-		}
-		else if (AircraftCheck = 0) {
-			std::cout << "Flight " << flightNumber << " is not in the system" << std::endl;
+			}
 		}
 	}
 }
@@ -131,22 +132,6 @@ int FlightSystem::GetAltitude(std::string flightNumber) const {
 		}
 	}
 	return 0;
-}
-
-void FlightSystem::CheckForCollision(std::string, int altitude, std::string gridReference) {
-	int CollisionDistance = 3000;
-
-	for (unsigned int i = 0; i < aircraftList_.size(); i++) {
-		for (unsigned int j = 1; j < aircraftList_.size(); j++) {
-			if ((aircraftList_[i].GetGridReference()) == (aircraftList_[j].GetGridReference())) {
-				if (aircraftList_[i].GetAltitude() == altitude) {
-					if ((aircraftList_[i].GetAltitude() >= CollisionDistance) == (aircraftList_[j].GetAltitude() <= CollisionDistance)) {
-						std::cout << "Warning – Aircraft collision possible between " << aircraftList_[i].GetFlightNumber() << " and " << aircraftList_[j].GetFlightNumber() << std::endl;
-					}
-				}
-			}
-		}
-	}
 }
 
 int FlightSystem::NumAircaftinSector() {

@@ -42,7 +42,7 @@ int Aircraft::GetGroundSpeed() const {
 }
 
 void Aircraft::SetAltitude(int altitude) {
-	altitude = altitude_;
+	altitude_ = altitude;
 }
 
 int Aircraft::GetAltitude() const {
