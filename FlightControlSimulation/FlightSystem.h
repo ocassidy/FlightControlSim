@@ -28,4 +28,6 @@ public:
 	int GetAltitude(std::string flightNumber) const;
 
 	int NumAircaftinSector();
+
+	void CheckForCollision(std::string, int altitude, std::string gridReference):
 };
